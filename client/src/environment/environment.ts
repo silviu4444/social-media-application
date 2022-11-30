@@ -1,0 +1,9 @@
+const environment = {
+  apiUrl: process.env.REACT_APP_API_URL_DEV
+};
+
+if (process.env.REACT_APP_ENV !== 'development') {
+  environment.apiUrl = process.env.REACT_APP_API_URL_PRODUCTION;
+}
+
+export default environment;
