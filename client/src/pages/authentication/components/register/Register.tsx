@@ -20,6 +20,8 @@ import { useNavigate } from 'react-router-dom';
 import { RouterLinks } from 'src/shared/constants/routes/routes';
 import { handleAuthErrors } from '../../utility/handle-auth-errors';
 import { BaseResponse } from '@backend/shared/interfaces/api';
+import { useAppDispatch } from 'src/store';
+import { UserActions } from 'src/pages/user/store/user';
 
 const Register = () => {
   const {
@@ -33,6 +35,7 @@ const Register = () => {
   } = useForm<RegisterFields>({ shouldFocusError: true });
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const mutation = useMutation<{ test: string }, AxiosError<BaseResponse>, {}>({
     mutationFn: ({
@@ -47,7 +50,10 @@ const Register = () => {
   const [t] = useAppTranslation();
 
   useEffect(() => {
-    mutation.isSuccess && navigate(RouterLinks.HOME);
+    if (mutation.isSuccess) {
+      navigate(RouterLinks.HOME);
+      dispatch(UserActions.userSignIn());
+    }
   }, [mutation.isSuccess]);
 
   useEffect(() => {
@@ -91,7 +97,7 @@ const Register = () => {
       </Typography>
       <form
         onSubmit={handleSubmit(onSubmitForm)}
-        className="flex flex-col mt-6 justify-between w-3/4 h-3/6"
+        className="flex flex-col mt-6 justify-between w-3/4 h-3/5"
       >
         <TextField
           {...register('fullName', {

@@ -5,13 +5,16 @@ import { useDispatch } from 'react-redux';
 
 import UISlice, { UIState } from './UI/ui';
 import { loadState, saveState } from './localStorage';
+import UserSlice, { UserState } from 'src/pages/user/store/user';
 
 export interface AppState {
   UI: UIState;
+  user: UserState;
 }
 
 const combinedReducer = combineReducers({
-  UI: UISlice.reducer
+  UI: UISlice.reducer,
+  user: UserSlice.reducer
 });
 
 const rootReducer = (state: AppState, action: Action) => {

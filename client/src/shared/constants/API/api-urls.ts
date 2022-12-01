@@ -1,5 +1,6 @@
 export const API_URLS = {
   AUTHENTICATION: {
-    SIGNUP: 'signup'
+    SIGNUP: 'signup',
+    LOGOUT: 'logout'
   }
 };

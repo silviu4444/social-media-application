@@ -18,4 +18,10 @@ const registerHandler = async ({
   return data;
 };
 
-export { registerHandler };
+const logoutHandler = async () => {
+  const url = `${environment.apiUrl}${API_URLS.AUTHENTICATION.LOGOUT}`;
+  const { data } = await axios.get(url);
+  return data;
+};
+
+export { registerHandler, logoutHandler };

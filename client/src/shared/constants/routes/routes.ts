@@ -1,4 +1,5 @@
 export enum RouterLinks {
   HOME = '/home',
-  AUTH = '/signup'
+  SIGNUP = '/signup',
+  LOGIN = '/login'
 }
