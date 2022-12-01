@@ -17,8 +17,8 @@ import { lightModeTheme } from './shared/theme/light-theme';
 import { darkModeTheme } from './shared/theme/dark-theme';
 import { useSelector } from 'react-redux';
 import { UIThemeModeState } from './store/UI/ui.selectors';
-import useSwitchThemeMode from './shared/hooks/hooks/utility/useSwitchThemeMode';
-import useUpdateLanguage from './shared/hooks/hooks/utility/useUpdateLanguage';
+import useSwitchThemeMode from './shared/hooks/utility/useSwitchThemeMode';
+import useUpdateLanguage from './shared/hooks/utility/useUpdateLanguage';
 
 const router = createBrowserRouter([
   {

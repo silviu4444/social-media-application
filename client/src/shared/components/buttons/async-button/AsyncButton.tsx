@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 
-import useAppTranslation from 'src/shared/hooks/hooks/utility/useAppTranslation';
+import useAppTranslation from 'src/shared/hooks/utility/useAppTranslation';
 import LoadingSpinner from '../../loading-spinner/LoadingSpinner';
 
 interface Props {
@@ -14,6 +14,7 @@ const AsyncButton = ({ textKey, isLoading }: Props) => {
   return (
     <Button
       type="submit"
+      color='secondary'
       variant="contained"
       size="large"
       disabled={!!isLoading}

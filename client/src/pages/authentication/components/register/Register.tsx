@@ -2,25 +2,31 @@ import { TextField } from '@mui/material';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
+import Typography from '@mui/material/Typography';
+import { AxiosError } from 'axios';
 
 import { RegisterFields } from '@backend/controllers/auth/interfaces/register.interface';
 import {
   emailValidityPattern,
   fullNameMaxLength,
   fullNameMinLength,
-  passwordMinLength
+  passwordMinLength,
+  maxLengthPassword
 } from '../../constants/auth-validators';
-import useAppTranslation from 'src/shared/hooks/hooks/utility/useAppTranslation';
+import useAppTranslation from 'src/shared/hooks/utility/useAppTranslation';
 import { registerHandler } from '../../fetchers/auth';
 import AsyncButton from 'src/shared/components/buttons/async-button/AsyncButton';
 import { useNavigate } from 'react-router-dom';
 import { RouterLinks } from 'src/shared/constants/routes/routes';
+import { handleAuthErrors } from '../../utility/handle-auth-errors';
+import { BaseResponse } from '@backend/shared/interfaces/api';
 
 const Register = () => {
   const {
     register,
     getValues,
     handleSubmit,
+    setError,
     setFocus,
     watch,
     formState: { errors }
@@ -28,7 +34,7 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const mutation = useMutation({
+  const mutation = useMutation<{ test: string }, AxiosError<BaseResponse>, {}>({
     mutationFn: ({
       fullName,
       email,
@@ -43,6 +49,19 @@ const Register = () => {
   useEffect(() => {
     mutation.isSuccess && navigate(RouterLinks.HOME);
   }, [mutation.isSuccess]);
+
+  useEffect(() => {
+    if (mutation.isError) {
+      const errorData = handleAuthErrors(mutation.error);
+      setError(
+        errorData.inputName as any,
+        { message: t(errorData.errorKeyMessage) },
+        {
+          shouldFocus: true
+        }
+      );
+    }
+  }, [mutation.isError]);
 
   useEffect(() => {
     setFocus('fullName');
@@ -64,12 +83,15 @@ const Register = () => {
     const confirmPassword = getValues('confirmPassword');
     mutation.mutate({ fullName, email, password, confirmPassword });
   };
+
   return (
     <div className="container flex flex-col items-center justify-center mx-auto h-screen">
-      <h1 className="mb-5 text-2xl text-blue-600">{t('lets-sign-you-up')}</h1>
+      <Typography variant="h5" color="secondary">
+        {t('lets-sign-you-up')}
+      </Typography>
       <form
         onSubmit={handleSubmit(onSubmitForm)}
-        className="flex flex-col justify-between w-3/4 h-3/6"
+        className="flex flex-col mt-6 justify-between w-3/4 h-3/6"
       >
         <TextField
           {...register('fullName', {
@@ -125,6 +147,12 @@ const Register = () => {
               message: t('minimum-length-characters', {
                 number: passwordMinLength
               })
+            },
+            maxLength: {
+              value: maxLengthPassword,
+              message: t('maximum-length-characters', {
+                number: maxLengthPassword
+              })
             }
           })}
           error={!!getError('password')}
@@ -148,6 +176,7 @@ const Register = () => {
             },
             validate: validateConfirmPassword
           })}
+          color="primary"
           error={!!getError('confirmPassword')}
           helperText={getError('confirmPassword')}
           id="password"

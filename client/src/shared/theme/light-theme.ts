@@ -17,23 +17,21 @@ export const lightModeTheme: ThemeOptions = {
   palette: {
     mode: 'light',
     primary: {
-      main: '#ffffff',
-      dark: '#f4f7fc'
+      main: '#262626'
     },
     secondary: {
-      main: '#2176ff',
+      main: '#0095F6',
       light: '#E76F51'
     },
     success: {
       main: '#006aff'
     },
     background: {
-      default: '#ffffff',
-      paper: '#F9FAFE'
+      default: '#fafafa',
     },
     text: {
       primary: '#4b4d4e',
-      secondary: '#D3D4DC',
+      secondary: '#1f1f1f',
       disabled: '#C2C2C2'
     }
   }

@@ -15,24 +15,21 @@ export const darkModeTheme: ThemeOptions = {
   palette: {
     mode: 'dark',
     primary: {
-      main: '#4b4b4b',
-      dark: '#f4f7fc'
+      main: '#f1f1f1'
     },
     secondary: {
-      main: '#2176ff',
-      light: '#E76F51'
-    },
-    background: {
-      default: '#1a1e20',
-      paper: '#262b30'
-    },
-    text: {
-      primary: '#fff',
-      secondary: '#c3cbcb',
-      disabled: '#646262'
+      main: '#0095F6',
     },
     success: {
       main: '#006aff'
+    },
+    background: {
+      default: '#262626',
+    },
+    text: {
+      primary: '#f1f1f1',
+      secondary: '#f1f1f1',
+      disabled: '#C2C2C2'
     }
   }
 };
