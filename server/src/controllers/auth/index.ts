@@ -6,9 +6,18 @@ import User from '../../models/user';
 import { BaseResponse } from './../../shared/interfaces/api';
 import { RegisterFields } from './interfaces/register.interface';
 import { IUser } from '../../models/user/interfaces/user';
+import { checkRegisterFields } from './validators/auth-validators';
 
 const postSignup = (req: Request<{}, {}, RegisterFields>, res: Response) => {
   const { fullName, email, password } = req.body;
+  const checkedCredentialsMessage = checkRegisterFields({
+    email,
+    password,
+    fullName
+  });
+
+  if (checkedCredentialsMessage) return res.send({ message: checkedCredentialsMessage });
+
   User.findOne({ email }).then((user) => {
     if (user) {
       const response: BaseResponse = {
@@ -25,8 +34,8 @@ const postSignup = (req: Request<{}, {}, RegisterFields>, res: Response) => {
       .hash(password, 12)
       .then((hashedPassword: string) => {
         const user = new User({
-          fullName,
-          email,
+          fullName: fullName.trim(),
+          email: email.trim(),
           password: hashedPassword,
         });
         return user.save();

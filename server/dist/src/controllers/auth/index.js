@@ -7,8 +7,16 @@ exports.postSignup = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const auth_responses_1 = __importDefault(require("./constants/auth-responses"));
 const user_1 = __importDefault(require("../../models/user"));
+const auth_validators_1 = require("./validators/auth-validators");
 const postSignup = (req, res) => {
     const { fullName, email, password } = req.body;
+    const checkedCredentialsMessage = (0, auth_validators_1.checkRegisterFields)({
+        email,
+        password,
+        fullName
+    });
+    if (checkedCredentialsMessage)
+        return res.send({ message: checkedCredentialsMessage });
     user_1.default.findOne({ email }).then((user) => {
         if (user) {
             const response = {
@@ -23,8 +31,8 @@ const postSignup = (req, res) => {
             .hash(password, 12)
             .then((hashedPassword) => {
             const user = new user_1.default({
-                fullName,
-                email,
+                fullName: fullName.trim(),
+                email: email.trim(),
                 password: hashedPassword,
             });
             return user.save();
