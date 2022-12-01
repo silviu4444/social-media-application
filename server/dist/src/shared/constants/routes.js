@@ -7,5 +7,6 @@ exports.routesUrls = {
     },
     AUTHENTICATION: {
         SIGNUP: '/signup',
+        LOGOUT: '/logout'
     },
 };

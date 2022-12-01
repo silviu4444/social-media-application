@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 
 import AUTH_RESPONSE_MESSAGES from './constants/auth-responses';
@@ -8,15 +8,30 @@ import { RegisterFields } from './interfaces/register.interface';
 import { IUser } from '../../models/user/interfaces/user';
 import { checkRegisterFields } from './validators/auth-validators';
 
+const getLogout = (req: Request, res: Response, next: NextFunction) => {
+  req.session.user = null;
+  req.session.save(function (err) {
+    if (err) next(err);
+    req.session.regenerate(function (err) {
+      if (err) next(err);
+      const response: BaseResponse = {
+        message: AUTH_RESPONSE_MESSAGES.UNAUTHENTICATED,
+      };
+      res.status(401).send(response);
+    });
+  });
+};
+
 const postSignup = (req: Request<{}, {}, RegisterFields>, res: Response) => {
   const { fullName, email, password } = req.body;
   const checkedCredentialsMessage = checkRegisterFields({
     email,
     password,
-    fullName
+    fullName,
   });
 
-  if (checkedCredentialsMessage) return res.send({ message: checkedCredentialsMessage });
+  if (checkedCredentialsMessage)
+    return res.send({ message: checkedCredentialsMessage });
 
   User.findOne({ email }).then((user) => {
     if (user) {
@@ -56,4 +71,4 @@ const postSignup = (req: Request<{}, {}, RegisterFields>, res: Response) => {
   });
 };
 
-export { postSignup };
+export { postSignup, getLogout };

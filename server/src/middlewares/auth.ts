@@ -8,7 +8,7 @@ export const isAuth = (req: Request, res: Response, next: NextFunction) => {
     const message: BaseResponse = {
       message: DEFAULT_RESPONSE_MESSAGES.UNAUTHENTICATED,
     };
-    return res.status(403).json(message);
+    return res.status(401).json(message);
   }
   next();
 };

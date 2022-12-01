@@ -10,7 +10,7 @@ const isAuth = (req, res, next) => {
         const message = {
             message: response_messages_1.default.UNAUTHENTICATED,
         };
-        return res.status(403).json(message);
+        return res.status(401).json(message);
     }
     next();
 };

@@ -3,17 +3,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postSignup = void 0;
+exports.getLogout = exports.postSignup = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const auth_responses_1 = __importDefault(require("./constants/auth-responses"));
 const user_1 = __importDefault(require("../../models/user"));
 const auth_validators_1 = require("./validators/auth-validators");
+const getLogout = (req, res, next) => {
+    req.session.user = null;
+    req.session.save(function (err) {
+        if (err)
+            next(err);
+        req.session.regenerate(function (err) {
+            if (err)
+                next(err);
+            const response = {
+                message: auth_responses_1.default.UNAUTHENTICATED,
+            };
+            res.status(401).send(response);
+        });
+    });
+};
+exports.getLogout = getLogout;
 const postSignup = (req, res) => {
     const { fullName, email, password } = req.body;
     const checkedCredentialsMessage = (0, auth_validators_1.checkRegisterFields)({
         email,
         password,
-        fullName
+        fullName,
     });
     if (checkedCredentialsMessage)
         return res.send({ message: checkedCredentialsMessage });
