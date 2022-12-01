@@ -23,7 +23,7 @@ axios.defaults.withCredentials = true;
 
 const preferredLanguage = (
   JSON.parse(localStorage.getItem('state')) as AppState
-)?.UI.app_language;
+)?.UI.language;
 
 i18next.init({
   interpolation: { escapeValue: false },

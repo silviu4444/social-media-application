@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 
-import useAppTranslation from 'src/shared/hooks/useAppTranslation';
+import useAppTranslation from 'src/shared/hooks/hooks/utility/useAppTranslation';
 import LoadingSpinner from '../../loading-spinner/LoadingSpinner';
 
 interface Props {

@@ -10,11 +10,11 @@ import {
   fullNameMinLength,
   passwordMinLength
 } from '../../constants/auth-validators';
-import useAppTranslation from 'src/shared/hooks/useAppTranslation';
+import useAppTranslation from 'src/shared/hooks/hooks/utility/useAppTranslation';
 import { registerHandler } from '../../fetchers/auth';
 import AsyncButton from 'src/shared/components/buttons/async-button/AsyncButton';
 import { useNavigate } from 'react-router-dom';
-import { routesUrls } from 'src/shared/constants/routes/routes';
+import { RouterLinks } from 'src/shared/constants/routes/routes';
 
 const Register = () => {
   const {
@@ -41,7 +41,7 @@ const Register = () => {
   const [t] = useAppTranslation();
 
   useEffect(() => {
-    mutation.isSuccess && navigate(routesUrls.HOME.MAIN_PAGE);
+    mutation.isSuccess && navigate(RouterLinks.HOME);
   }, [mutation.isSuccess]);
 
   useEffect(() => {

@@ -1,18 +1,35 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PaletteMode } from '@mui/material';
+
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { i18nSupported } from 'src/shared/enums/i18n';
 
-export interface UIState {
-  app_language: i18nSupported;
+export interface ThemeMode {
+  mode: PaletteMode;
+  autoSwitch: boolean;
 }
 
-const initialState: UIState = {
-  app_language: i18nSupported.ENGLISH
+export interface UIState {
+  themeMode: ThemeMode;
+  language: i18nSupported;
+}
+
+const initialUIState: UIState = {
+  themeMode: { mode: 'light', autoSwitch: true },
+  language: i18nSupported.ENGLISH
 };
 
 const UISlice = createSlice({
-  name: 'UI',
-  initialState,
-  reducers: {}
+  name: 'ui',
+  initialState: initialUIState,
+  reducers: {
+    changeColorMode(state, action: PayloadAction<ThemeMode>) {
+      state.themeMode.mode = action.payload.mode;
+      state.themeMode.autoSwitch = action.payload.autoSwitch;
+    },
+    changeLanguage(state, action: PayloadAction<i18nSupported>) {
+      state.language = action.payload;
+    }
+  }
 });
 
 export const UIActions = UISlice.actions;
