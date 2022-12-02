@@ -11,6 +11,7 @@ import {
 import Login from 'src/pages/authentication/components/login/Login';
 import Register from 'src/pages/authentication/components/register/Register';
 import HomePage from 'src/pages/home/components/home/Home';
+import Profile from 'src/pages/user/components/profile/Profile';
 import { UserIsAuthenticatedState } from 'src/pages/user/store/user.selectors';
 import ProtectedRoute from 'src/shared/components/protected-route/ProtectedRoute';
 import { RouterLinks } from 'src/shared/constants/routes/routes';
@@ -48,6 +49,12 @@ const AppRouter = () => {
         >
           <Route path={RouterLinks.SIGNUP} element={<Register />} />
           <Route path={RouterLinks.LOGIN} element={<Login />} />
+        </Route>
+        <Route
+          path={RouterLinks.PROFILE}
+          element={<ProtectedRoute isAllowed={isAuthenticated} />}
+        >
+          <Route index element={<Profile />} />
         </Route>
       </Route>
     )
