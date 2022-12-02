@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import Typography from '@mui/material/Typography';
 
-import { RegisterFields } from '@backend/controllers/auth/interfaces/register.interface';
+import { RegisterFields } from '@backend/controllers/auth/interfaces/auth.interface';
 import {
   emailValidityPattern,
   fullNameMaxLength,

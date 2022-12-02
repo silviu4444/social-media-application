@@ -3,7 +3,8 @@ import DEFAULT_FE_RESPONSE_MESSAGES from '../../../shared/constants/API/DEFAULT_
 const AUTH_FE_RESPONSE_MESSAGES = {
   ...DEFAULT_FE_RESPONSE_MESSAGES,
   USER_CREATED: 'user-created',
-  USER_ALREADY_EXISTS: 'user-already-exists'
+  USER_ALREADY_EXISTS: 'user-already-exists',
+  WRONG_USERNAME_OR_PASSWORD: 'wrong-username-or-password'
 };
 
 export default AUTH_FE_RESPONSE_MESSAGES;

@@ -15,6 +15,12 @@ export const handleAuthErrors = (errorResponse: Error) => {
         inputName: 'email',
         errorKeyMessage: AUTH_FE_RESPONSE_MESSAGES.USER_ALREADY_EXISTS
       };
+      break;
+    case AUTH_BE_RESPONSE_MESSAGES.WRONG_USERNAME_OR_PASSWORD:
+      errorHandler = {
+        inputName: 'email',
+        errorKeyMessage: AUTH_FE_RESPONSE_MESSAGES.WRONG_USERNAME_OR_PASSWORD
+      };
   }
 
   return errorHandler;
