@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import UISlice, { UIState } from './UI/ui';
 import { loadState, saveState } from './localStorage';
 import UserSlice, { UserState } from 'src/pages/user/store/user';
+import environment from 'src/environment/environment';
 
 export interface AppState {
   UI: UIState;
@@ -25,7 +26,10 @@ const rootReducer = (state: AppState, action: Action) => {
 };
 
 const store = configureStore({
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) =>
+    environment.env === 'development'
+      ? getDefaultMiddleware().concat(logger)
+      : getDefaultMiddleware(),
   reducer: rootReducer,
   preloadedState: loadState()
 });

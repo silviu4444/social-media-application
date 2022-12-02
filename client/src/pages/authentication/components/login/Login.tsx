@@ -77,9 +77,6 @@ const Login = () => {
 
   return (
     <div className="container flex flex-col items-center justify-center mx-auto h-screen">
-      <Typography variant="h5" color="secondary">
-        {t('lets-sign-you-up')}
-      </Typography>
       <form
         onSubmit={handleSubmit(onSubmitForm)}
         className="flex flex-col mt-6 justify-between w-3/4 h-2/6"
@@ -128,7 +125,7 @@ const Login = () => {
           type="password"
           variant="outlined"
         />
-        <AsyncButton textKey="sign-me-up" isLoading={mutation.isLoading} />
+        <AsyncButton textKey="login" isLoading={mutation.isLoading} />
       </form>
     </div>
   );

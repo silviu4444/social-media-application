@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
+
 import { RouterLinks } from 'src/shared/constants/routes/routes';
 
 interface Props {
