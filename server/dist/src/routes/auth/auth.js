@@ -30,4 +30,4 @@ const routes_1 = require("../../shared/constants/routes");
 const authRouter = (0, express_1.Router)();
 exports.authRouter = authRouter;
 authRouter.post(routes_1.routesUrls.AUTHENTICATION.SIGNUP, authController.postSignup);
-authRouter.get(routes_1.routesUrls.AUTHENTICATION.LOGOUT, authController.getLogout);
+authRouter.post(routes_1.routesUrls.AUTHENTICATION.LOGOUT, authController.postLogout);

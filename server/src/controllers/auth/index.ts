@@ -8,17 +8,12 @@ import { RegisterFields } from './interfaces/register.interface';
 import { IUser } from '../../models/user/interfaces/user';
 import { checkRegisterFields } from './validators/auth-validators';
 
-const getLogout = (req: Request, res: Response, next: NextFunction) => {
-  req.session.user = null;
-  req.session.save(function (err) {
-    if (err) next(err);
-    req.session.regenerate(function (err) {
-      if (err) next(err);
-      const response: BaseResponse = {
-        message: AUTH_RESPONSE_MESSAGES.UNAUTHENTICATED,
-      };
-      res.status(401).send(response);
-    });
+const postLogout = (req: Request, res: Response, next: NextFunction) => {
+  req.session.destroy(() => {
+    const response: BaseResponse = {
+      message: AUTH_RESPONSE_MESSAGES.UNAUTHENTICATED,
+    };
+    res.status(401).send(response);
   });
 };
 
@@ -71,4 +66,4 @@ const postSignup = (req: Request<{}, {}, RegisterFields>, res: Response) => {
   });
 };
 
-export { postSignup, getLogout };
+export { postSignup, postLogout };
