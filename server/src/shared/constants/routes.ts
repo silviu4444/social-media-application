@@ -4,6 +4,7 @@ export const routesUrls = {
   },
   AUTHENTICATION: {
     SIGNUP: '/signup',
-    LOGOUT: '/logout'
+    LOGIN: '/login',
+    LOGOUT: '/logout',
   },
 };

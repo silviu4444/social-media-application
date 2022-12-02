@@ -4,16 +4,57 @@ import bcrypt from 'bcryptjs';
 import AUTH_RESPONSE_MESSAGES from './constants/auth-responses';
 import User from '../../models/user';
 import { BaseResponse } from './../../shared/interfaces/api';
-import { RegisterFields } from './interfaces/register.interface';
+import { LoginFields, RegisterFields } from './interfaces/auth.interface';
 import { IUser } from '../../models/user/interfaces/user';
-import { checkRegisterFields } from './validators/auth-validators';
+import {
+  checkLoginFields,
+  checkRegisterFields,
+} from './validators/auth-validators';
 
 const postLogout = (req: Request, res: Response, next: NextFunction) => {
   req.session.destroy(() => {
     const response: BaseResponse = {
       message: AUTH_RESPONSE_MESSAGES.UNAUTHENTICATED,
     };
-    res.status(401).send(response);
+    res.status(401).json(response);
+  });
+};
+
+const postLogin = (req: Request<{}, {}, LoginFields>, res: Response) => {
+  const { email, password } = req.body;
+  const checkedCredentialsMessage = checkLoginFields({ email, password });
+  if (checkedCredentialsMessage)
+    return res.status(400).json({ message: checkedCredentialsMessage });
+
+  User.findOne({ email }).then((user) => {
+    if (!user) {
+      const message: BaseResponse = {
+        message: AUTH_RESPONSE_MESSAGES.WRONG_USERNAME_OR_PASSWORD,
+      };
+      return res.status(400).json(message);
+    }
+
+    bcrypt
+      .compare(password, user.password)
+      .then((doMatch: boolean) => {
+        if (doMatch) {
+          req.session.user = user;
+          return req.session.save(() => {
+            const message: BaseResponse = {
+              message: AUTH_RESPONSE_MESSAGES.LOGGED_IN_SUCCESSFULLY,
+            };
+            return res.status(200).json(message);
+          });
+        }
+        const message: BaseResponse = {
+          message: AUTH_RESPONSE_MESSAGES.WRONG_USERNAME_OR_PASSWORD,
+        };
+        res.status(400).json(message);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.redirect('/login');
+      });
   });
 };
 
@@ -26,7 +67,7 @@ const postSignup = (req: Request<{}, {}, RegisterFields>, res: Response) => {
   });
 
   if (checkedCredentialsMessage)
-    return res.send({ message: checkedCredentialsMessage });
+    return res.status(400).json({ message: checkedCredentialsMessage });
 
   User.findOne({ email }).then((user) => {
     if (user) {
@@ -66,4 +107,4 @@ const postSignup = (req: Request<{}, {}, RegisterFields>, res: Response) => {
   });
 };
 
-export { postSignup, postLogout };
+export { postSignup, postLogout, postLogin };

@@ -7,6 +7,8 @@ const authRouter = Router();
 
 authRouter.post(routesUrls.AUTHENTICATION.SIGNUP, authController.postSignup);
 
+authRouter.post(routesUrls.AUTHENTICATION.LOGIN, authController.postLogin);
+
 authRouter.post(routesUrls.AUTHENTICATION.LOGOUT, authController.postLogout);
 
 export { authRouter };
