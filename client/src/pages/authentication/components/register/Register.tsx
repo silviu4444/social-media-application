@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import Typography from '@mui/material/Typography';
-import { AxiosError } from 'axios';
 
 import { RegisterFields } from '@backend/controllers/auth/interfaces/register.interface';
 import {
@@ -19,9 +18,9 @@ import AsyncButton from 'src/shared/components/buttons/async-button/AsyncButton'
 import { useNavigate } from 'react-router-dom';
 import { RouterLinks } from 'src/shared/constants/routes/routes';
 import { handleAuthErrors } from '../../utility/handle-auth-errors';
-import { BaseResponse } from '@backend/shared/interfaces/api';
 import { useAppDispatch } from 'src/store';
 import { UserActions } from 'src/pages/user/store/user';
+import { BaseResponse } from '@backend/shared/interfaces/api';
 
 const Register = () => {
   const {
@@ -37,7 +36,7 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const mutation = useMutation<{ test: string }, AxiosError<BaseResponse>, {}>({
+  const mutation = useMutation<BaseResponse, Error, {}>({
     mutationFn: ({
       fullName,
       email,

@@ -10,7 +10,7 @@ const initialUserState: UserState = {
 };
 
 const UserSlice = createSlice({
-  name: 'ui',
+  name: 'user',
   initialState: initialUserState,
   reducers: {
     userSignOut(state) {
