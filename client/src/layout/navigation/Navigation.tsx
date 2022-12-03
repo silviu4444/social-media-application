@@ -1,4 +1,4 @@
-import { HomeOutlined, Person2Outlined } from '@mui/icons-material';
+import { HomeOutlined, Person2Outlined, Add } from '@mui/icons-material';
 import { Box, List, ListItem } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { UIThemeModeState } from 'src/store/UI/ui.selectors';
 const Navigation = () => {
   const routes = [
     { route: RouterLinks.HOME, IconComponent: HomeOutlined },
+    { route: RouterLinks.NEW_POSTS, IconComponent:  Add},
     { route: RouterLinks.PROFILE, IconComponent: Person2Outlined }
   ];
 

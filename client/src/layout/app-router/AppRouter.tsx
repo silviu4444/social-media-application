@@ -11,6 +11,7 @@ import {
 import Login from 'src/pages/authentication/components/login/Login';
 import Register from 'src/pages/authentication/components/register/Register';
 import HomePage from 'src/pages/home/components/home/Home';
+import NewPost from 'src/pages/posts/components/new-post/NewPost';
 import Profile from 'src/pages/user/components/profile/Profile';
 import { UserIsAuthenticatedState } from 'src/pages/user/store/user.selectors';
 import ProtectedRoute from 'src/shared/components/protected-route/ProtectedRoute';
@@ -55,6 +56,12 @@ const AppRouter = () => {
           element={<ProtectedRoute isAllowed={isAuthenticated} />}
         >
           <Route index element={<Profile />} />
+        </Route>
+        <Route
+          path={RouterLinks.NEW_POSTS}
+          element={<ProtectedRoute isAllowed={isAuthenticated} />}
+        >
+          <Route index element={<NewPost />} />
         </Route>
       </Route>
     )
