@@ -11,7 +11,7 @@ const auth_validators_1 = require("./validators/auth-validators");
 const postLogout = (req, res, next) => {
     req.session.destroy(() => {
         const response = {
-            message: auth_responses_1.default.UNAUTHENTICATED,
+            message: auth_responses_1.default.UNAUTHENTICATED
         };
         res.status(401).json(response);
     });
@@ -25,7 +25,7 @@ const postLogin = (req, res) => {
     user_1.default.findOne({ email }).then((user) => {
         if (!user) {
             const message = {
-                message: auth_responses_1.default.WRONG_USERNAME_OR_PASSWORD,
+                message: auth_responses_1.default.WRONG_USERNAME_OR_PASSWORD
             };
             return res.status(400).json(message);
         }
@@ -36,19 +36,21 @@ const postLogin = (req, res) => {
                 req.session.user = user;
                 return req.session.save(() => {
                     const message = {
-                        message: auth_responses_1.default.LOGGED_IN_SUCCESSFULLY,
+                        message: auth_responses_1.default.LOGGED_IN_SUCCESSFULLY
                     };
                     return res.status(200).json(message);
                 });
             }
             const message = {
-                message: auth_responses_1.default.WRONG_USERNAME_OR_PASSWORD,
+                message: auth_responses_1.default.WRONG_USERNAME_OR_PASSWORD
             };
             res.status(400).json(message);
         })
             .catch((err) => {
-            console.log(err);
-            res.redirect('/login');
+            const errorMessage = {
+                message: auth_responses_1.default.SOMETHING_WENT_WRONG
+            };
+            res.status(500).json(errorMessage);
         });
     });
 };
@@ -58,19 +60,19 @@ const postSignup = (req, res) => {
     const checkedCredentialsMessage = (0, auth_validators_1.checkRegisterFields)({
         email,
         password,
-        fullName,
+        fullName
     });
     if (checkedCredentialsMessage)
         return res.status(400).json({ message: checkedCredentialsMessage });
     user_1.default.findOne({ email }).then((user) => {
         if (user) {
             const response = {
-                message: auth_responses_1.default.USER_ALREADY_EXISTS,
+                message: auth_responses_1.default.USER_ALREADY_EXISTS
             };
             return res.status(403).json(response);
         }
         const errorMessage = {
-            message: auth_responses_1.default.SOMETHING_WENT_WRONG,
+            message: auth_responses_1.default.SOMETHING_WENT_WRONG
         };
         bcryptjs_1.default
             .hash(password, 12)
@@ -78,7 +80,7 @@ const postSignup = (req, res) => {
             const user = new user_1.default({
                 fullName: fullName.trim(),
                 email: email.trim(),
-                password: hashedPassword,
+                password: hashedPassword
             });
             return user.save();
         })
@@ -88,7 +90,7 @@ const postSignup = (req, res) => {
                 if (err)
                     return res.status(500).json(errorMessage);
                 const message = {
-                    message: auth_responses_1.default.USER_CREATED,
+                    message: auth_responses_1.default.USER_CREATED
                 };
                 res.status(201).json(message);
             });

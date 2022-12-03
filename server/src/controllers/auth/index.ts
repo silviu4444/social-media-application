@@ -8,13 +8,13 @@ import { LoginFields, RegisterFields } from './interfaces/auth.interface';
 import { IUser } from '../../models/user/interfaces/user';
 import {
   checkLoginFields,
-  checkRegisterFields,
+  checkRegisterFields
 } from './validators/auth-validators';
 
 const postLogout = (req: Request, res: Response, next: NextFunction) => {
   req.session.destroy(() => {
     const response: BaseResponse = {
-      message: AUTH_RESPONSE_MESSAGES.UNAUTHENTICATED,
+      message: AUTH_RESPONSE_MESSAGES.UNAUTHENTICATED
     };
     res.status(401).json(response);
   });
@@ -29,7 +29,7 @@ const postLogin = (req: Request<{}, {}, LoginFields>, res: Response) => {
   User.findOne({ email }).then((user) => {
     if (!user) {
       const message: BaseResponse = {
-        message: AUTH_RESPONSE_MESSAGES.WRONG_USERNAME_OR_PASSWORD,
+        message: AUTH_RESPONSE_MESSAGES.WRONG_USERNAME_OR_PASSWORD
       };
       return res.status(400).json(message);
     }
@@ -41,19 +41,21 @@ const postLogin = (req: Request<{}, {}, LoginFields>, res: Response) => {
           req.session.user = user;
           return req.session.save(() => {
             const message: BaseResponse = {
-              message: AUTH_RESPONSE_MESSAGES.LOGGED_IN_SUCCESSFULLY,
+              message: AUTH_RESPONSE_MESSAGES.LOGGED_IN_SUCCESSFULLY
             };
             return res.status(200).json(message);
           });
         }
         const message: BaseResponse = {
-          message: AUTH_RESPONSE_MESSAGES.WRONG_USERNAME_OR_PASSWORD,
+          message: AUTH_RESPONSE_MESSAGES.WRONG_USERNAME_OR_PASSWORD
         };
         res.status(400).json(message);
       })
       .catch((err) => {
-        console.log(err);
-        res.redirect('/login');
+        const errorMessage: BaseResponse = {
+          message: AUTH_RESPONSE_MESSAGES.SOMETHING_WENT_WRONG
+        };
+        res.status(500).json(errorMessage);
       });
   });
 };
@@ -63,7 +65,7 @@ const postSignup = (req: Request<{}, {}, RegisterFields>, res: Response) => {
   const checkedCredentialsMessage = checkRegisterFields({
     email,
     password,
-    fullName,
+    fullName
   });
 
   if (checkedCredentialsMessage)
@@ -72,13 +74,13 @@ const postSignup = (req: Request<{}, {}, RegisterFields>, res: Response) => {
   User.findOne({ email }).then((user) => {
     if (user) {
       const response: BaseResponse = {
-        message: AUTH_RESPONSE_MESSAGES.USER_ALREADY_EXISTS,
+        message: AUTH_RESPONSE_MESSAGES.USER_ALREADY_EXISTS
       };
       return res.status(403).json(response);
     }
 
     const errorMessage: BaseResponse = {
-      message: AUTH_RESPONSE_MESSAGES.SOMETHING_WENT_WRONG,
+      message: AUTH_RESPONSE_MESSAGES.SOMETHING_WENT_WRONG
     };
 
     bcrypt
@@ -87,7 +89,7 @@ const postSignup = (req: Request<{}, {}, RegisterFields>, res: Response) => {
         const user = new User({
           fullName: fullName.trim(),
           email: email.trim(),
-          password: hashedPassword,
+          password: hashedPassword
         });
         return user.save();
       })
@@ -96,7 +98,7 @@ const postSignup = (req: Request<{}, {}, RegisterFields>, res: Response) => {
         return req.session.save((err) => {
           if (err) return res.status(500).json(errorMessage);
           const message: BaseResponse = {
-            message: AUTH_RESPONSE_MESSAGES.USER_CREATED,
+            message: AUTH_RESPONSE_MESSAGES.USER_CREATED
           };
           res.status(201).json(message);
         });

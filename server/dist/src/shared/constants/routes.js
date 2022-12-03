@@ -3,11 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.routesUrls = void 0;
 exports.routesUrls = {
     HOME: {
-        MAIN_PAGE: '/home',
+        MAIN_PAGE: '/home'
     },
     AUTHENTICATION: {
         SIGNUP: '/signup',
         LOGIN: '/login',
-        LOGOUT: '/logout',
+        LOGOUT: '/logout'
     },
+    POSTS: {
+        ADD_NEW_POST: '/add-new-post'
+    }
 };
