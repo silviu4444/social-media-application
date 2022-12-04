@@ -7,3 +7,6 @@ export const debounceFunction = (func: Function, delay = 1000) => {
     }, delay);
   };
 };
+
+export const base64ToMb = (base64EncodedString: string) =>
+  Math.floor(base64EncodedString.replace(/=/g, '').length * 0.75) / 1000000;

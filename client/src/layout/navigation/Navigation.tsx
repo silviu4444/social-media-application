@@ -9,7 +9,6 @@ import { UIThemeModeState } from 'src/store/UI/ui.selectors';
 const Navigation = () => {
   const routes = [
     { route: RouterLinks.HOME, IconComponent: HomeOutlined },
-    { route: RouterLinks.NEW_POSTS, IconComponent:  Add},
     { route: RouterLinks.PROFILE, IconComponent: Person2Outlined }
   ];
 
@@ -24,9 +23,8 @@ const Navigation = () => {
 
   return (
     <Box
-      sx={{ backgroundColor: 'background' }}
       component="nav"
-      className="fixed w-full bottom-0 h-12 border-t-2"
+      className="fixed w-full bottom-0 left-0 right-0 h-12 border-t-2 app-navigation"
     >
       <List className="flex justify-around items-center h-full">
         {routes.map(({ route, IconComponent }) => (

@@ -9,6 +9,10 @@ export const darkModeTheme: ThemeOptions = {
           a {
             color: #b3bbbb;
           }
+
+          nav.app-navigation {
+            background-color: #262626 !important;
+          }
         `
     }
   },

@@ -11,6 +11,10 @@ export const lightModeTheme: ThemeOptions = {
             text-decoration: none;
             font-weight: 600;
           }
+
+          nav.app-navigation {
+            background-color: #fafafa !important;
+          }
         `
     }
   },

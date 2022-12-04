@@ -1,16 +1,15 @@
-import { logout } from 'src/pages/user/store/user.actions';
-import { useAppDispatch } from 'src/store';
+import { Add } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+
+import { RouterLinks } from 'src/shared/constants/routes/routes';
 
 const HomePage = () => {
-  const dispatch = useAppDispatch();
-
-  const onLogout = () => {
-    dispatch(logout());
-  };
   return (
-    <div>
-      <button onClick={onLogout}>Logout</button>
-    </div>
+    <header>
+      <Link to={RouterLinks.NEW_POSTS}>
+        <Add />
+      </Link>
+    </header>
   );
 };
 

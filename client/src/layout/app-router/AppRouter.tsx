@@ -21,10 +21,10 @@ import Navigation from '../navigation/Navigation';
 const AppRouter = () => {
   const isAuthenticated = useSelector(UserIsAuthenticatedState);
   const AppLayout = () => (
-    <>
+    <div className={isAuthenticated ? 'app-container' : undefined}>
       <Outlet />
       {isAuthenticated ? <Navigation /> : null}
-    </>
+    </div>
   );
 
   const router = createBrowserRouter(

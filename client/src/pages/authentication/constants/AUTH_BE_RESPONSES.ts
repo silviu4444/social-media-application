@@ -6,7 +6,7 @@ const AUTH_BE_RESPONSE_MESSAGES = {
   LOGGED_IN_SUCCESSFULLY: 'User logged in successfully',
   USER_ALREADY_EXISTS: 'This user already exists!',
   PLEASE_PROVIDE_VALID_CREDENTIALS: 'Please provide valid credentials!',
-  WRONG_USERNAME_OR_PASSWORD: 'Wrong username or password!'
+  WRONG_EMAIL_OR_PASSWORD: 'Wrong email or password!'
 };
 
 export default AUTH_BE_RESPONSE_MESSAGES;

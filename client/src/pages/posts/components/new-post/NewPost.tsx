@@ -1,55 +1,59 @@
 import { useMutation } from '@tanstack/react-query';
-import TextareaAutosize from '@mui/base/TextareaAutosize';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { Typography } from '@mui/material';
+import { FormEvent, useState } from 'react';
+
 import useAppTranslation from 'src/shared/hooks/utility/useAppTranslation';
 import { NewPostFields } from '@backend/models/post/interfaces/post';
 import { BaseResponse } from '@backend/shared/interfaces/api';
-import { TextField } from '@mui/material';
 import AsyncButton from 'src/shared/components/buttons/async-button/AsyncButton';
 import { addNewPost } from '../../fetchers/new-post';
+import ImageUploader from 'src/shared/components/image-uploader/ImageUploader';
 
 const NewPost = () => {
-  const {
-    register,
-    getValues,
-    handleSubmit,
-    setError,
-    setFocus,
-    formState: { errors }
-  } = useForm<NewPostFields>({ shouldFocusError: true });
+  const [b64Image, setB64Image] = useState<string>(null);
+  const [description, setDescription] = useState('');
 
   const mutation = useMutation<BaseResponse, Error, {}>({
-    mutationFn: ({ description }: NewPostFields) => addNewPost({ description })
+    mutationFn: ({ description, base64Img }: NewPostFields) =>
+      addNewPost({ description, base64Img })
   });
 
   const [t] = useAppTranslation();
 
-  useEffect(() => {
-    setFocus('description');
-  }, []);
+  const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const getError = (control: string) =>
-    errors[control]?.message ? errors[control].message : null;
-
-  const onSubmitForm = () => {
-    const postDescription = getValues('description');
-    mutation.mutate({ description: postDescription });
+    description.length > 0 &&
+      mutation.mutate({ description, base64Img: b64Image });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitForm)}>
-      {' '}
-      <TextareaAutosize
-        {...register('description', {
-          required: {
-            value: true,
-            message: t('name-is-required')
-          }
-        })}
-      />
-      <AsyncButton textKey="add-post" />
-    </form>
+    <div className="p-4 mx-auto flex flex-col justify-center">
+      <form
+        className="flex flex-col justify-center self-center"
+        onSubmit={onSubmitForm}
+      >
+        <Typography variant="h5" color="primary">
+          {t('description')}
+        </Typography>
+        <textarea
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+          className="custom-text-area mt-3"
+        ></textarea>
+        <ImageUploader
+          className="self-center my-5 w-96 text-center"
+          onUpload={setB64Image}
+          base64Source={b64Image}
+        />
+        <AsyncButton
+          disabled={description.length === 0 && !b64Image}
+          className="mt-3"
+          textKey="add-post"
+        />
+      </form>
+    </div>
   );
 };
 

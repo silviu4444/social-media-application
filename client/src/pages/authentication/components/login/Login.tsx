@@ -2,7 +2,6 @@ import { TextField } from '@mui/material';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
-import Typography from '@mui/material/Typography';
 
 import { RegisterFields } from '@backend/controllers/auth/interfaces/auth.interface';
 import {
@@ -15,7 +14,7 @@ import {
 import useAppTranslation from 'src/shared/hooks/utility/useAppTranslation';
 import { loginHandler } from '../../fetchers/auth';
 import AsyncButton from 'src/shared/components/buttons/async-button/AsyncButton';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RouterLinks } from 'src/shared/constants/routes/routes';
 import { handleAuthErrors } from '../../utility/handle-auth-errors';
 import { useAppDispatch } from 'src/store';
@@ -125,6 +124,10 @@ const Login = () => {
           type="password"
           variant="outlined"
         />
+        <p className='text-center my-2'>
+          {t('dont-have-an-account-yet')}
+          <Link className='text-blue-600 ml-1' to={RouterLinks.SIGNUP}>{t('register')}</Link>
+        </p>
         <AsyncButton textKey="login" isLoading={mutation.isLoading} />
       </form>
     </div>
