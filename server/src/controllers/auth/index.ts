@@ -29,7 +29,7 @@ const postLogin = (req: Request<{}, {}, LoginFields>, res: Response) => {
   User.findOne({ email }).then((user) => {
     if (!user) {
       const message: BaseResponse = {
-        message: AUTH_RESPONSE_MESSAGES.WRONG_USERNAME_OR_PASSWORD
+        message: AUTH_RESPONSE_MESSAGES.WRONG_EMAIL_OR_PASSWORD
       };
       return res.status(400).json(message);
     }
@@ -47,7 +47,7 @@ const postLogin = (req: Request<{}, {}, LoginFields>, res: Response) => {
           });
         }
         const message: BaseResponse = {
-          message: AUTH_RESPONSE_MESSAGES.WRONG_USERNAME_OR_PASSWORD
+          message: AUTH_RESPONSE_MESSAGES.WRONG_EMAIL_OR_PASSWORD
         };
         res.status(400).json(message);
       })

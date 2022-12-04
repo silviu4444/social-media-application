@@ -9,7 +9,7 @@ const express_1 = __importDefault(require("express"));
 const environment_1 = __importDefault(require("./environment"));
 const routes_1 = require("./src/routes");
 const app = (0, express_1.default)();
-app.use(body_parser_1.default.json());
+app.use(body_parser_1.default.json({ limit: '7mb' }));
 // should be removed on production!
 app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');

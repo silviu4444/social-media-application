@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 import { ModelsDefinition } from '../shared/enums/models-definition';
-import User from '../user';
 import { IPost } from './interfaces/post';
 
 const Schema = mongoose.Schema;
@@ -13,6 +12,11 @@ const PostSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: ModelsDefinition.USER,
       required: true
+    },
+    imageData: {
+      imageUrl: String,
+      imageId: String,
+      required: false
     }
   },
   { timestamps: true }

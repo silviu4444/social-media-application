@@ -25,7 +25,7 @@ const postLogin = (req, res) => {
     user_1.default.findOne({ email }).then((user) => {
         if (!user) {
             const message = {
-                message: auth_responses_1.default.WRONG_USERNAME_OR_PASSWORD
+                message: auth_responses_1.default.WRONG_EMAIL_OR_PASSWORD
             };
             return res.status(400).json(message);
         }
@@ -42,7 +42,7 @@ const postLogin = (req, res) => {
                 });
             }
             const message = {
-                message: auth_responses_1.default.WRONG_USERNAME_OR_PASSWORD
+                message: auth_responses_1.default.WRONG_EMAIL_OR_PASSWORD
             };
             res.status(400).json(message);
         })

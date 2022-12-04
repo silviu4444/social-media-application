@@ -12,6 +12,11 @@ const PostSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: models_definition_1.ModelsDefinition.USER,
         required: true
+    },
+    imageData: {
+        imageUrl: String,
+        imageId: String,
+        required: false
     }
 }, { timestamps: true });
 const Post = mongoose_1.default.model(models_definition_1.ModelsDefinition.POST, PostSchema);
