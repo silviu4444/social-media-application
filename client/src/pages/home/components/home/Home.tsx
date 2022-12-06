@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <header>
       <Link to={RouterLinks.NEW_POSTS}>
-        <Add />
+        <Add fontSize='large' />
       </Link>
     </header>
   );

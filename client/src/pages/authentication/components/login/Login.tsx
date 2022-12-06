@@ -3,11 +3,8 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 
-import { RegisterFields } from '@backend/controllers/auth/interfaces/auth.interface';
 import {
   emailValidityPattern,
-  fullNameMaxLength,
-  fullNameMinLength,
   passwordMinLength,
   maxLengthPassword
 } from '../../constants/auth-validators';
@@ -20,6 +17,7 @@ import { handleAuthErrors } from '../../utility/handle-auth-errors';
 import { useAppDispatch } from 'src/store';
 import { UserActions } from 'src/pages/user/store/user';
 import { BaseResponse } from '@backend/shared/interfaces/api';
+import { RegisterFields } from '@backend/controllers/auth/interfaces/auth.interface';
 
 const Login = () => {
   const {

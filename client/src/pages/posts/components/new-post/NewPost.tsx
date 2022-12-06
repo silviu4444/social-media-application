@@ -49,6 +49,7 @@ const NewPost = () => {
         />
         <AsyncButton
           disabled={description.length === 0 && !b64Image}
+          isLoading={mutation.isLoading}
           className="mt-3"
           textKey="add-post"
         />
