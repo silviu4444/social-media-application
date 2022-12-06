@@ -38,10 +38,11 @@ const UserSchema = new Schema({
         }
     ]
 }, { timestamps: true });
-UserSchema.methods.getAllPosts = function () {
+UserSchema.statics.getAllPosts = function (userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield this.populate('posts.postId');
-        return this.posts;
+        const user = yield this.findById(userId);
+        const userWithPopulatedPosts = yield user.populate('posts.postId');
+        return userWithPopulatedPosts.posts.map(post => post.postId);
     });
 };
 UserSchema.methods.addNewPost = function (post) {

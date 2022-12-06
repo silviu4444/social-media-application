@@ -10,7 +10,7 @@ export interface NewPostImageData {
   imageId: string;
 }
 
-export interface IPost extends Document {
+export interface PostDocument extends Document {
   description: string;
   userId: Object;
   imageData?: NewPostImageData;

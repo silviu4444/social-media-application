@@ -34,7 +34,7 @@ export async function storeImageAndAddNewPost(
     const imageData: NewPostImageData = { imageUrl: url, imageId };
 
     return addNewPost(description, User, imageData);
-  } catch (error) {
-    throw new Error(POST_RESPONSE_MESSAGES.SOMETHING_WENT_WRONG);
+  } catch ({ message }) {
+    throw new Error(message);
   }
 }

@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import { IPost } from '../post/interfaces/post';
+import mongoose, { ObjectId } from 'mongoose';
+import { PostDocument } from '../post/interfaces/post';
 
 import { ModelsDefinition } from '../shared/enums/models-definition';
-import { IUser } from './interfaces/user';
+import { IUser, UserModel } from './interfaces/user';
 
 const Schema = mongoose.Schema;
 
@@ -33,15 +33,16 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-UserSchema.methods.getAllPosts = async function () {
-  await this.populate('posts.postId');
-  return this.posts;
+UserSchema.statics.getAllPosts = async function (userId: ObjectId) {
+  const user: IUser = await this.findById(userId);
+  const userWithPopulatedPosts = await user.populate<PostDocument[]>('posts.postId');
+  return userWithPopulatedPosts.posts.map(post => post.postId);
 };
 
-UserSchema.methods.addNewPost = function (post: IPost) {
+UserSchema.methods.addNewPost = function (post: PostDocument) {
   this.posts.push({ postId: post._id });
   return this.save();
 };
 
-const User = mongoose.model<IUser>(ModelsDefinition.USER, UserSchema);
+const User = mongoose.model<IUser, UserModel>(ModelsDefinition.USER, UserSchema);
 export default User;

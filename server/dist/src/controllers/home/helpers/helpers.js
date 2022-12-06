@@ -36,8 +36,8 @@ function storeImageAndAddNewPost(base64Img, description, User) {
             const imageData = { imageUrl: url, imageId };
             return addNewPost(description, User, imageData);
         }
-        catch (error) {
-            throw new Error(post_responses_1.default.SOMETHING_WENT_WRONG);
+        catch ({ message }) {
+            throw new Error(message);
         }
     });
 }

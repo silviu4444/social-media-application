@@ -12,5 +12,8 @@ exports.routesUrls = {
     },
     POSTS: {
         ADD_NEW_POST: '/add-new-post'
+    },
+    USER: {
+        GET_ALL_POSTS: '/get-all-posts'
     }
 };

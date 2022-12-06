@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 import { ModelsDefinition } from '../shared/enums/models-definition';
-import { IPost } from './interfaces/post';
+import { PostDocument } from './interfaces/post';
 
 const Schema = mongoose.Schema;
 
@@ -22,6 +22,6 @@ const PostSchema = new Schema(
   { timestamps: true }
 );
 
-const Post = mongoose.model<IPost>(ModelsDefinition.POST, PostSchema);
+const Post = mongoose.model<PostDocument>(ModelsDefinition.POST, PostSchema);
 
 export default Post;
