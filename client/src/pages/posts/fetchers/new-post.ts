@@ -9,7 +9,7 @@ const addNewPost = async ({ description, base64Img }: NewPostFields) => {
     const { data } = await axios.post(url, { description, base64Img });
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(error.response?.data.message);
   }
 };
 

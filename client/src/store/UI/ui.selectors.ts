@@ -1,4 +1,4 @@
-import { AppState } from './../index';
+import { AppState } from '../index';
 
 export const UIState = (state: AppState) => state.UI;
 
