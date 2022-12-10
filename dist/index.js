@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const path_1 = __importDefault(require("path"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const express_1 = __importDefault(require("express"));
@@ -18,7 +19,12 @@ app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
 });
+app.use(express_1.default.static(path_1.default.join(__dirname, 'client', 'build')));
 app.use(routes_1.routes);
+routes_1.routes.get('*', (req, res) => {
+    const indexHTML = path_1.default.join(process.cwd(), 'client', 'build', 'index.html');
+    res.status(200).sendFile(indexHTML);
+});
 mongoose_1.default
     .connect(environment_1.default.MONGODB_URI)
     .then(() => {

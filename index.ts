@@ -1,6 +1,7 @@
+import path from 'path';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import express, { Express, NextFunction, Response } from 'express';
+import express, { Express, NextFunction, Request, Response } from 'express';
 
 import environment from './environment';
 
@@ -25,7 +26,14 @@ app.use((_, res: Response, next: NextFunction) => {
   next();
 });
 
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
 app.use(routes);
+
+routes.get('*', (req: Request, res: Response) => {
+  const indexHTML = path.join(process.cwd(), 'client', 'build', 'index.html');
+  res.status(200).sendFile(indexHTML);
+});
 
 mongoose
   .connect(environment.MONGODB_URI)

@@ -14,6 +14,7 @@ exports.routes = (0, express_1.Router)();
 // THIS ONE BELOW HAS TO BE FIRST!
 exports.routes.use(session_1.default);
 exports.routes.use(auth_1.authRouter);
+// root page
 exports.routes.use(home_1.homeRouter);
 exports.routes.use(post_1.postRouter);
 exports.routes.use(profile_1.profileRouter);
