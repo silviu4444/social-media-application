@@ -19,7 +19,7 @@ app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
 });
-const clientDirectory = path_1.default.join(process.cwd(), 'client', 'build');
+const clientDirectory = path_1.default.join(__dirname, '..', 'client', 'build');
 console.log('clientDirectory', clientDirectory);
 app.use(express_1.default.static(clientDirectory));
 app.use(routes_1.routes);

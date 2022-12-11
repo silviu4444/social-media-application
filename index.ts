@@ -26,7 +26,7 @@ app.use((_, res: Response, next: NextFunction) => {
   next();
 });
 
-const clientDirectory = path.join(process.cwd(), 'client', 'build');
+const clientDirectory = path.join(__dirname, '..', 'client', 'build');
 console.log('clientDirectory', clientDirectory)
 app.use(express.static(clientDirectory));
 
