@@ -31,7 +31,7 @@ app.use(express.static(clientDirectory));
 
 app.use(routes);
 
-routes.get('*', (req: Request, res: Response) => {
+app.get('*', (req: Request, res: Response) => {
   res.sendFile('index.html', { root: clientDirectory });
 });
 

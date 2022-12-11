@@ -22,7 +22,7 @@ app.use((_, res, next) => {
 const clientDirectory = path_1.default.join(__dirname, '..', 'client', 'build');
 app.use(express_1.default.static(clientDirectory));
 app.use(routes_1.routes);
-routes_1.routes.get('*', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile('index.html', { root: clientDirectory });
 });
 mongoose_1.default
