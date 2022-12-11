@@ -26,13 +26,13 @@ app.use((_, res: Response, next: NextFunction) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+const root = path.join(__dirname, 'client', 'build')
+app.use(express.static(root));
 
 app.use(routes);
 
 routes.get('*', (req: Request, res: Response) => {
-  const indexHTML = path.join(process.cwd(), 'client', 'build', 'index.html');
-  res.status(200).sendFile(indexHTML);
+  res.sendFile('index.html', { root });
 });
 
 mongoose

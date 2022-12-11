@@ -19,11 +19,11 @@ app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
 });
-app.use(express_1.default.static(path_1.default.join(__dirname, 'client', 'build')));
+const root = path_1.default.join(__dirname, 'client', 'build');
+app.use(express_1.default.static(root));
 app.use(routes_1.routes);
 routes_1.routes.get('*', (req, res) => {
-    const indexHTML = path_1.default.join(process.cwd(), 'client', 'build', 'index.html');
-    res.status(200).sendFile(indexHTML);
+    res.sendFile('index.html', { root });
 });
 mongoose_1.default
     .connect(environment_1.default.MONGODB_URI)
