@@ -6,7 +6,7 @@ const environment = {
 console.log('REACT ENV', environment);
 console.log('REACT .env', process.env);
 
-if (process.env.REACT_APP_ENV !== 'development') {
+if (process.env.NODE_ENV !== 'development') {
   environment.apiUrl = process.env.REACT_APP_API_URL_PRODUCTION;
 }
 
