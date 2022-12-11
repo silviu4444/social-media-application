@@ -20,7 +20,6 @@ app.use((_, res, next) => {
     next();
 });
 const clientDirectory = path_1.default.join(__dirname, '..', 'client', 'build');
-console.log('clientDirectory', clientDirectory);
 app.use(express_1.default.static(clientDirectory));
 app.use(routes_1.routes);
 routes_1.routes.get('*', (req, res) => {

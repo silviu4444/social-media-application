@@ -27,7 +27,6 @@ app.use((_, res: Response, next: NextFunction) => {
 });
 
 const clientDirectory = path.join(__dirname, '..', 'client', 'build');
-console.log('clientDirectory', clientDirectory)
 app.use(express.static(clientDirectory));
 
 app.use(routes);
