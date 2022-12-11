@@ -3,6 +3,8 @@ const environment = {
   apiUrl: process.env.REACT_APP_API_URL_DEV
 };
 
+console.log('REACT ENV', environment);
+
 if (process.env.REACT_APP_ENV !== 'development') {
   environment.apiUrl = process.env.REACT_APP_API_URL_PRODUCTION;
 }
