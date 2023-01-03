@@ -18,6 +18,7 @@ import { i18nSupported } from './shared/enums/i18n';
 import { I18nextProvider } from 'react-i18next';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { UserActions } from './pages/user/store/user';
+import { formatDateInTranslations } from './shared/utility/dates';
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.withCredentials = true;
@@ -40,7 +41,7 @@ const preferredLanguage = (
 )?.UI.language;
 
 i18next.init({
-  interpolation: { escapeValue: false },
+  interpolation: { escapeValue: false, format: formatDateInTranslations },
   lng: preferredLanguage || i18nSupported.ENGLISH,
   resources: {
     [i18nSupported.ENGLISH]: {

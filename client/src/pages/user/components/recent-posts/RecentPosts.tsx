@@ -6,6 +6,7 @@ import { DtoPostsCardData } from 'src/pages/posts/interfaces/post-card';
 import CustomSkeleton from 'src/shared/components/custom-skeleton/CustomSkeleton';
 import useAppTranslation from 'src/shared/hooks/utility/useAppTranslation';
 import { getAllPosts } from '../../fetchers/profile';
+import styles from './RecentPosts.module.scss';
 
 const RecentPosts = () => {
   const [t] = useAppTranslation();
@@ -20,9 +21,20 @@ const RecentPosts = () => {
       <Typography variant="h5" color="secondary">
         {t('your-recent-posts')}
       </Typography>
-      {isSuccess &&
-        data.posts.map((post) => <PostCard key={post._id} post={post} />)}
-      {isLoading && <CustomSkeleton />}
+      <div
+        className={`${styles['posts-container']} grid justify-items-center items-center grid-cols-1`}
+      >
+        <>
+          {isSuccess &&
+            data.posts.map((post) => <PostCard key={post._id} post={post} />)}
+          {isLoading && (
+            <>
+              <CustomSkeleton />
+              <CustomSkeleton />
+            </>
+          )}
+        </>
+      </div>
     </>
   );
 };
