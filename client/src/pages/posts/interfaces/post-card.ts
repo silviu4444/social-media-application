@@ -2,11 +2,11 @@ import { BaseResponse } from 'src/shared/interfaces/api/response';
 
 export interface NewPostImageData {
   imageUrl: string;
-  imageId: string;
 }
 
 export interface IPost {
   description: string;
+  userFullName: string;
   userId: string;
   _id: string;
   imageData?: NewPostImageData;

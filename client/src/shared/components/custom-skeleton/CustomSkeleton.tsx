@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, Skeleton } from '@mui/material';
 
 const CustomSkeleton = () => {
   return (
-    <Card sx={{ maxWidth: 345, m: 2 }}>
+    <Card sx={{ width: 345, m: 2 }}>
       <CardHeader
         avatar={
           <Skeleton

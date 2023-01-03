@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { Typography } from '@mui/material';
 import { FormEvent, useState } from 'react';
@@ -8,14 +9,18 @@ import { BaseResponse } from '@backend/shared/interfaces/api';
 import AsyncButton from 'src/shared/components/buttons/async-button/AsyncButton';
 import { addNewPost } from '../../fetchers/new-post';
 import ImageUploader from 'src/shared/components/image-uploader/ImageUploader';
+import { RouterLinks } from 'src/shared/constants/routes/routes';
 
 const NewPost = () => {
+  const navigate = useNavigate();
+
   const [b64Image, setB64Image] = useState<string>(null);
   const [description, setDescription] = useState('');
 
   const mutation = useMutation<BaseResponse, Error, {}>({
     mutationFn: ({ description, base64Img }: NewPostFields) =>
-      addNewPost({ description, base64Img })
+      addNewPost({ description, base64Img }),
+    onSuccess: () => navigate(RouterLinks.PROFILE)
   });
 
   const [t] = useAppTranslation();

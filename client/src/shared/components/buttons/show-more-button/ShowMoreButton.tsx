@@ -17,25 +17,23 @@ const ShowMoreButton = ({ text }: Props) => {
     setExpanded(!expanded);
   };
 
+  const showButton = (key: string) => (
+    <span onClick={handleExpandClick} className="text-blue-600 inline cursor-pointer">
+      {t(key).toLowerCase()}
+    </span>
+  );
+
   return (
     <>
       {!expanded && (
         <>
           {text.slice(0, SHOW_MORE_POST_DESCRIPTION_LENGTH + 1)}...{' '}
-          <span onClick={handleExpandClick} className="text-blue-600 inline">
-            {t('show-more').toLowerCase()}
-          </span>
+          {showButton('show-more')}
         </>
       )}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <>
-            {text}
-            <span onClick={handleExpandClick} className="text-blue-600 inline">
-              {' '}
-              {t('show-less').toLowerCase()}
-            </span>
-          </>
+          {text} {showButton('show-less')}
         </CardContent>
       </Collapse>
     </>

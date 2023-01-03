@@ -11,6 +11,7 @@ import useAppTranslation from 'src/shared/hooks/utility/useAppTranslation';
 import { DateFormats } from 'src/shared/enums/dates';
 import useDateTranslate from 'src/shared/hooks/utility/useDateInterpolation';
 import PostCardDescription from '../post-card-description/PostCardDescription';
+import { mapNameInitials } from 'src/shared/utility/helpers';
 
 interface Props {
   post: IPost;
@@ -22,19 +23,14 @@ export default function PostCard({ post }: Props) {
   const { translateDate } = useDateTranslate();
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 345 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: 'red' }} aria-label="user-avatar">
-            R
+            {mapNameInitials(post.userFullName)}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="haha"
+        title={post.userFullName}
         subheader={translateDate(
           'date-formatter',
           new Date(post.createdAt),
@@ -44,7 +40,7 @@ export default function PostCard({ post }: Props) {
       <CardContent>
         <PostCardDescription description={post.description} />
       </CardContent>
-      {post.imageData && (
+      {post.imageData.imageUrl && (
         <CardMedia
           component="img"
           height="194"
