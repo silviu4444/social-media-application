@@ -1,1 +1,3 @@
 export const MAX_IMAGE_SIZE = 5;
+
+export const SHOW_MORE_POST_DESCRIPTION_LENGTH = 150;
