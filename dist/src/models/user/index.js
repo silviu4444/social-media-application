@@ -42,7 +42,13 @@ UserSchema.statics.getAllPosts = function (userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = yield this.findById(userId);
         const userWithPopulatedPosts = yield user.populate('posts.postId');
-        return userWithPopulatedPosts.posts.map(post => post.postId);
+        return userWithPopulatedPosts.posts.map((post) => {
+            var _a;
+            const postData = post.postId._doc;
+            return Object.assign(Object.assign({}, post.postId._doc), { userFullName: user.fullName, imageData: {
+                    imageUrl: (_a = postData.imageData) === null || _a === void 0 ? void 0 : _a.imageUrl
+                } });
+        });
     });
 };
 UserSchema.methods.addNewPost = function (post) {

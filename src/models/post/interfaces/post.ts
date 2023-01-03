@@ -15,3 +15,7 @@ export interface PostDocument extends Document {
   userId: Object;
   imageData?: NewPostImageData;
 }
+
+export interface IPostDocument extends PostDocument {
+  userFullName: string;
+}

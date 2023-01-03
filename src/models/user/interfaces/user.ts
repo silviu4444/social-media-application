@@ -1,4 +1,4 @@
-import { PostDocument } from './../../post/interfaces/post';
+import { IPostDocument, PostDocument } from './../../post/interfaces/post';
 import { Document, Model, ObjectId } from 'mongoose';
 
 export interface IUserPost extends Document {
@@ -14,5 +14,5 @@ export interface IUser extends Document {
 }
 
 export interface UserModel extends Model<IUser> {
-  getAllPosts: (userId: ObjectId) => Promise<PostDocument[]>;
+  getAllPosts: (userId: ObjectId) => Promise<IPostDocument[]>;
 }

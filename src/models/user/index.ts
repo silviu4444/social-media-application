@@ -35,8 +35,19 @@ const UserSchema = new Schema(
 
 UserSchema.statics.getAllPosts = async function (userId: ObjectId) {
   const user: IUser = await this.findById(userId);
-  const userWithPopulatedPosts = await user.populate<PostDocument[]>('posts.postId');
-  return userWithPopulatedPosts.posts.map(post => post.postId);
+  const userWithPopulatedPosts = await user.populate<PostDocument[]>(
+    'posts.postId'
+  );
+  return userWithPopulatedPosts.posts.map((post) => {
+    const postData: PostDocument = (post.postId as any)._doc;
+    return {
+      ...(post.postId as any)._doc,
+      userFullName: user.fullName,
+      imageData: {
+        imageUrl: postData.imageData?.imageUrl
+      }
+    };
+  });
 };
 
 UserSchema.methods.addNewPost = function (post: PostDocument) {
@@ -44,5 +55,8 @@ UserSchema.methods.addNewPost = function (post: PostDocument) {
   return this.save();
 };
 
-const User = mongoose.model<IUser, UserModel>(ModelsDefinition.USER, UserSchema);
+const User = mongoose.model<IUser, UserModel>(
+  ModelsDefinition.USER,
+  UserSchema
+);
 export default User;
