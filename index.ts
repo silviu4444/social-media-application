@@ -11,7 +11,7 @@ const app: Express = express();
 
 app.use(bodyParser.json({ limit: '7mb' }));
 
-// should be removed on production!
+// should be removed in production!
 app.use((_, res: Response, next: NextFunction) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader(
