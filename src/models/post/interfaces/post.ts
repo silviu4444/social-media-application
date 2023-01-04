@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import { MongooseTimestamps } from '../../../shared/interfaces/mongoose';
 
 export interface NewPostFields {
   description: string;
@@ -10,12 +11,15 @@ export interface NewPostImageData {
   imageId: string;
 }
 
-export interface PostDocument extends Document {
+export interface PostDocumentObject extends MongooseTimestamps {
   description: string;
   userId: Object;
   imageData?: NewPostImageData;
 }
 
-export interface IPostDocument extends PostDocument {
+export interface PostDocument extends Document, PostDocumentObject {}
+
+export interface FEPostDocument extends Omit<PostDocumentObject, 'imageData'> {
   userFullName: string;
+  postImage: string;
 }

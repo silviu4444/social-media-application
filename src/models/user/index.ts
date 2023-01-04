@@ -1,8 +1,12 @@
 import mongoose, { ObjectId } from 'mongoose';
-import { PostDocument } from '../post/interfaces/post';
+import {
+  FEPostDocument,
+  PostDocument,
+  PostDocumentObject
+} from '../post/interfaces/post';
 
 import { ModelsDefinition } from '../shared/enums/models-definition';
-import { IUser, UserModel } from './interfaces/user';
+import { IUser, UserModel, UserPopulatedPosts } from './interfaces/user';
 
 const Schema = mongoose.Schema;
 
@@ -33,19 +37,19 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-UserSchema.statics.getAllPosts = async function (userId: ObjectId) {
+UserSchema.statics.getAllPosts = async function (
+  userId: ObjectId
+): Promise<FEPostDocument[]> {
   const user: IUser = await this.findById(userId);
-  const userWithPopulatedPosts = await user.populate<PostDocument[]>(
+  const userWithPopulatedPosts = await user.populate<UserPopulatedPosts>(
     'posts.postId'
   );
   return userWithPopulatedPosts.posts.map((post) => {
-    const postData: PostDocument = (post.postId as any)._doc;
+    const { imageData, ...rest } = post.postId.toObject<PostDocumentObject>();
     return {
-      ...(post.postId as any)._doc,
+      ...rest,
       userFullName: user.fullName,
-      imageData: {
-        imageUrl: postData.imageData?.imageUrl
-      }
+      postImage: imageData?.imageUrl || null
     };
   });
 };

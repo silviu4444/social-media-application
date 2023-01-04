@@ -3,8 +3,6 @@ import CardHeader from '@mui/material/CardHeader';
 import { CardMedia } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { IPost } from '../../interfaces/post-card';
 import useAppTranslation from 'src/shared/hooks/utility/useAppTranslation';
@@ -40,12 +38,12 @@ export default function PostCard({ post }: Props) {
       <CardContent>
         <PostCardDescription description={post.description} />
       </CardContent>
-      {post.imageData.imageUrl && (
+      {post.postImage && (
         <CardMedia
           component="img"
           height="194"
-          image={post.imageData.imageUrl}
-          alt="Paella dish"
+          image={post.postImage}
+          alt={`${post.userFullName}'s post image.`}
         />
       )}
     </Card>
