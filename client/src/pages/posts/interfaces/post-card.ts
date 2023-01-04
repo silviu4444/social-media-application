@@ -5,13 +5,13 @@ export interface NewPostImageData {
 }
 
 export interface IPost {
+  _id: string;
+  createdAt: string;
   description: string;
+  postImage: string;
+  updatedAt: string;
   userFullName: string;
   userId: string;
-  _id: string;
-  imageData?: NewPostImageData;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface DtoPostsCardData extends BaseResponse {

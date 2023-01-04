@@ -8,6 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -43,11 +54,8 @@ UserSchema.statics.getAllPosts = function (userId) {
         const user = yield this.findById(userId);
         const userWithPopulatedPosts = yield user.populate('posts.postId');
         return userWithPopulatedPosts.posts.map((post) => {
-            var _a;
-            const postData = post.postId._doc;
-            return Object.assign(Object.assign({}, post.postId._doc), { userFullName: user.fullName, imageData: {
-                    imageUrl: (_a = postData.imageData) === null || _a === void 0 ? void 0 : _a.imageUrl
-                } });
+            const _a = post.postId.toObject(), { imageData } = _a, rest = __rest(_a, ["imageData"]);
+            return Object.assign(Object.assign({}, rest), { userFullName: user.fullName, postImage: (imageData === null || imageData === void 0 ? void 0 : imageData.imageUrl) || null });
         });
     });
 };
